@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Interactive Portfolio</title>
+    <title>Nathan Diep's Digital Portfolio!</title>
     <style>
         body {
             margin: 0;
@@ -62,7 +62,7 @@
                         character.y < hotspot.y + hotspot.height &&
                         character.y + character.size > hotspot.y
                     ) {
-                        alert(`This is ${hotspot.label}`);
+                        window.open("https://raw.githubusercontent.com/APCodingGoat1/DatingSim/refs/heads/main/pics/bradpics/brad1.jpg", "_blank");
                     }
                 });
             }
@@ -86,7 +86,7 @@
             });
         });
         */
-       
+
         // Update character position
         function update() {
             if (keys.w) character.y -= character.speed;
