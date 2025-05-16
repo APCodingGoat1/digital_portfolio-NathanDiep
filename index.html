@@ -53,7 +53,23 @@
             if (e.key in keys) keys[e.key] = false;
         });
 
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'f') {
+                hotspots.forEach(hotspot => {
+                    if (
+                        character.x < hotspot.x + hotspot.width &&
+                        character.x + character.size > hotspot.x &&
+                        character.y < hotspot.y + hotspot.height &&
+                        character.y + character.size > hotspot.y
+                    ) {
+                        alert(`This is ${hotspot.label}`);
+                    }
+                });
+            }
+        });
         // Event listener for mouse clicks
+        /*
+
         canvas.addEventListener('click', (e) => {
             const mouseX = e.clientX;
             const mouseY = e.clientY;
@@ -69,7 +85,8 @@
                 }
             });
         });
-
+        */
+       
         // Update character position
         function update() {
             if (keys.w) character.y -= character.speed;
