@@ -3,108 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- Webpage Title (will show on tab) -->
-    <title>Professional Portfolio</title>
+    <title>Interactive Portfolio</title>
     <style>
-        /* Basic styling for the page */
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
-            padding: 0;
-            line-height: 1.6;
+            overflow: hidden;
         }
-        header {
-            background: #333;
-            color: #fff;
-            padding: 1rem 0;
-            text-align: center;
-        }
-        nav {
-            margin: 1rem 0;
-        }
-        nav a {
-            color: #fff;
-            text-decoration: none;
-            margin: 0 1rem;
-        }
-        section {
-            padding: 2rem;
-            border-bottom: 1px solid #ddd;
-        }
-        footer {
-            text-align: center;
-            padding: 1rem;
-            background: #333;
-            color: #fff;
+        canvas {
+            display: block;
         }
     </style>
 </head>
 <body>
-    <!-- Header Section -->
-    <header>
-        <h1>Welcome to My Portfolio</h1>
-        <nav>
-            <a href="#about">About Me</a>
-            <a href="#projects">Projects</a>
-            <a href="#credentials">Credentials</a>
-            <a href="#contact">Contact Info</a>
-        </nav>
-    </header>
+    <canvas id="gameCanvas"></canvas>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-    <!-- About Me Section -->
-    <section id="about">
-        <h2>About Me</h2>
-        <p>
-            <!-- Add a brief introduction about yourself here -->
-            Hello! My name is Nathan Diep. I am passionate about software engineering as well as biology and physics.
-            <br> I am constantly ready to learn and improve upon my skills! 
-            <br> Welcome to my portfolio website!
-        </p>
-    </section>
+        // Character properties
+        const character = {
+            x: canvas.width / 2,
+            y: canvas.height / 2,
+            size: 30,
+            speed: 5,
+            color: 'blue'
+        };
 
-    <!-- Projects Section -->
-    <section id="projects">
-        <h2>Projects</h2>
-        <p>
-            <!-- Add a list or description of your projects here -->
-            Here are some of the projects I have worked on:
-        </p>
-        <ul>
-            <li>Dating Sim: [Brief description] <a href="https://github.com/APCodingGoat1/DatingSim.git" target="_blank">[Project repository]</a></li>
-        </ul>
-    </section>
+        // Interactive hotspots
+        const hotspots = [
+            { x: 200, y: 200, width: 100, height: 50, label: "About Me" },
+            { x: 400, y: 300, width: 100, height: 50, label: "Projects" }
+        ];
 
-    <!-- Credentials Section -->
-    <section id="credentials">
-        <h2>Credentials</h2>
-        <p>
-            <!-- Add your credentials, certifications, or achievements here -->
-            I have earned the following certifications and achievements:
-        </p>
-        <ul>
-            <li>Python Certification: [Details]</li>
-            <li>Certification 2: [Details]</li>
-            <li>Certification 3: [Details]</li>
-            <!-- Add images of your certification digital badges -->
-        </ul>
-    </section>
+        // Movement keys
+        const keys = {
+            w: false,
+            a: false,
+            s: false,
+            d: false
+        };
 
-    <!-- Contact Info Section -->
-    <section id="contact">
-        <h2>Contact Info</h2>
-        <p>
-            <!-- Add your contact information here -->
-            Feel free to reach out to me:
-        </p>
-        <ul>
-            <li>Email: nathan11blue@gmail.com</li>
-            <li>LinkedIn: <a href="[your-linkedin-profile]" target="_blank">[Your LinkedIn]</a></li>
-        </ul>
-    </section>
+        // Event listeners for movement
+        window.addEventListener('keydown', (e) => {
+            if (e.key in keys) keys[e.key] = true;
+        });
+        window.addEventListener('keyup', (e) => {
+            if (e.key in keys) keys[e.key] = false;
+        });
 
-    <!-- Footer Section -->
-    <footer>
-        <p>&copy; 2025 Nathan Diep. All rights reserved.</p>
-    </footer>
+        // Event listener for mouse clicks
+        canvas.addEventListener('click', (e) => {
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+
+            hotspots.forEach(hotspot => {
+                if (
+                    mouseX > hotspot.x &&
+                    mouseX < hotspot.x + hotspot.width &&
+                    mouseY > hotspot.y &&
+                    mouseY < hotspot.y + hotspot.height
+                ) {
+                    alert(`You clicked on ${hotspot.label}`);
+                }
+            });
+        });
+
+        // Update character position
+        function update() {
+            if (keys.w) character.y -= character.speed;
+            if (keys.s) character.y += character.speed;
+            if (keys.a) character.x -= character.speed;
+            if (keys.d) character.x += character.speed;
+
+            // Prevent character from leaving the canvas
+            character.x = Math.max(0, Math.min(canvas.width - character.size, character.x));
+            character.y = Math.max(0, Math.min(canvas.height - character.size, character.y));
+        }
+
+        // Draw everything
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Draw character
+            ctx.fillStyle = character.color;
+            ctx.fillRect(character.x, character.y, character.size, character.size);
+
+            // Draw hotspots
+            hotspots.forEach(hotspot => {
+                ctx.fillStyle = 'red';
+                ctx.fillRect(hotspot.x, hotspot.y, hotspot.width, hotspot.height);
+                ctx.fillStyle = 'white';
+                ctx.fillText(hotspot.label, hotspot.x + 10, hotspot.y + 30);
+            });
+        }
+
+        // Game loop
+        function gameLoop() {
+            update();
+            draw();
+            requestAnimationFrame(gameLoop);
+        }
+
+        gameLoop();
+    </script>
 </body>
 </html>
