@@ -12,8 +12,28 @@
         canvas {
             display: block;
         }
+        .hidden-section {
+            display: none;
+        }
     </style>
 </head>
+
+     <section id="about" class="hidden-section">
+        <h2>About Me</h2>
+        <p>Nathan Diep</p>
+    </section>
+
+    <section id="projects" class="hidden-section">
+        <h2>Projects</h2>
+        <p>Showcase your projects here.</p>
+    </section>
+
+    <section id="contact" class="hidden-section">
+        <h2>Contact</h2>
+        <p>Provide your contact information here.</p>
+    </section>
+    
+
 <body>
     <canvas id="gameCanvas"></canvas>
     <script>
@@ -34,7 +54,8 @@
         // Interactive hotspots
         const hotspots = [
             { x: 200, y: 200, width: 100, height: 50, label: "About Me" },
-            { x: 400, y: 300, width: 100, height: 50, label: "Projects" }
+            { x: 400, y: 300, width: 100, height: 50, label: "Projects" },
+            { x: 600, y: 400, width: 100, height: 50, label: "Contact" }
         ];
 
         // Movement keys
@@ -62,20 +83,18 @@
                         character.y < hotspot.y + hotspot.height &&
                         character.y + character.size > hotspot.y
                     ) {
-                        window.open("https://raw.githubusercontent.com/APCodingGoat1/DatingSim/refs/heads/main/pics/bradpics/brad1.jpg", "_blank");
-                        window.open("https://raw.githubusercontent.com/APCodingGoat1/DatingSim/refs/heads/main/pics/bradpics/brad1.jpg", "_blank");
-                        window.open("https://raw.githubusercontent.com/APCodingGoat1/DatingSim/refs/heads/main/pics/bradpics/brad1.jpg", "_blank");
-                        window.open("https://raw.githubusercontent.com/APCodingGoat1/DatingSim/refs/heads/main/pics/bradpics/brad1.jpg", "_blank");
-                        window.open("https://raw.githubusercontent.com/APCodingGoat1/DatingSim/refs/heads/main/pics/bradpics/brad1.jpg", "_blank");
-                        window.open("https://raw.githubusercontent.com/APCodingGoat1/DatingSim/refs/heads/main/pics/bradpics/brad1.jpg", "_blank");
-                        window.open("https://raw.githubusercontent.com/APCodingGoat1/DatingSim/refs/heads/main/pics/bradpics/brad1.jpg", "_blank");
-                        window.open("https://raw.githubusercontent.com/APCodingGoat1/DatingSim/refs/heads/main/pics/bradpics/brad1.jpg", "_blank");
-                        window.open("https://raw.githubusercontent.com/APCodingGoat1/DatingSim/refs/heads/main/pics/bradpics/brad1.jpg", "_blank");
-                        window.open("https://raw.githubusercontent.com/APCodingGoat1/DatingSim/refs/heads/main/pics/bradpics/brad1.jpg", "_blank");
-                        window.open("https://raw.githubusercontent.com/APCodingGoat1/DatingSim/refs/heads/main/pics/bradpics/brad1.jpg", "_blank");
-                        window.open("https://raw.githubusercontent.com/APCodingGoat1/DatingSim/refs/heads/main/pics/bradpics/brad1.jpg", "_blank");
-                        window.open("https://raw.githubusercontent.com/APCodingGoat1/DatingSim/refs/heads/main/pics/bradpics/brad1.jpg", "_blank");
-                        window.open("https://raw.githubusercontent.com/APCodingGoat1/DatingSim/refs/heads/main/pics/bradpics/brad1.jpg", "_blank");
+                        // Hide all sections first
+                        document.getElementById('about').classList.add('hidden-section');
+                        document.getElementById('projects').classList.add('hidden-section');
+                        document.getElementById('contact').classList.add('hidden-section');
+                        // Show the selected section
+                        if (hotspot.label === "About Me") {
+                            document.getElementById('about').classList.remove('hidden-section');
+                        } else if (hotspot.label === "Projects") {
+                            document.getElementById('projects').classList.remove('hidden-section');
+                        } else if (hotspot.label === "Contact") {
+                            document.getElementById('contact').classList.remove('hidden-section');
+                }
                     }
                 });
             }
