@@ -15,22 +15,84 @@
         .hidden-section {
             display: none;
         }
+        header {
+            text-align: center;
+            background: #333;
+            color: #fff;
+            padding: 32px 0 24px 0;
+            font-family: Arial, sans-serif;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            margin: 0 0 12px 0;
+            font-size: 2.2em;
+            letter-spacing: 1px;
+        }
+        header p {
+            margin: 8px 0;
+            font-size: 1.1em;
+        }
     </style>
 </head>
+<body>
+    <header>
+        <h1>Nathan Diep's Digital Portfolio</h1>
+        <p>Explore my projects, certifications, and more!</p>
+        <p>Use the 'W', 'A', 'S', 'D' keys to move around and press 'F' to interact with the hotspots!</p>
+    </header>
+</body>
 
      <section id="about" class="hidden-section">
         <h2>About Me</h2>
-        <p>Nathan Diep</p>
+        <p>
+        <ul>
+            <li>Hello! My name is Nathan Diep. I am passionate about software engineering as well as biology and physics.</li>
+            <li>I am constantly ready to learn and improve upon my skills!</li>
+        </ul>
+        </p>
     </section>
 
     <section id="projects" class="hidden-section">
         <h2>Projects</h2>
-        <p>Showcase your projects here.</p>
+        <p> 
+        <ul>
+            <li>Dating Sim: 
+            DatingSim is a fun and interactive dating simulation game where players can interact with various non-playable characters. 
+            The game features unique dialogue, character images, and dynamic relationship mechanics. </li>
+                <ul>
+                    <li><a href="https://github.com/APCodingGoat1/DatingSim.git" target="_blank">[Project repository]</a></li>
+                </ul>
+            <br>
+            <li>2048 Game: 
+            [Based off of the original 2048 game, this project is a fun and interactive game where players can combine tiles to reach 
+            the 2048 tile.] </li>
+                <ul>
+                    <li><a href="https://github.com/APCodingGoat1/2048.git" target="_blank">[Project repository]</a></li>
+                    <li><a href="https://drive.google.com/file/d/1KJjhIWQpW_kUQId5s38fAmKIg7v5mtx0/view?usp=sharing" target="_blank">[Project Demo]</a></li>
+                </ul>
+            
+            
+
+        </ul>
+    </p>
+    </section>
+
+    <section id="certifications" class="hidden-section">
+        <h2>Certifications</h2>
+        <p> 
+        <ul>
+            <li>Python Certification</a></li>
+            <li>Passed AP Computer Science Principles</a></li>
+
+        </ul>
+    </p>
     </section>
 
     <section id="contact" class="hidden-section">
         <h2>Contact</h2>
-        <p>Provide your contact information here.</p>
+        <p><ul>
+            <li>Email: nathan11blue@gmail.com</li>
+        </ul></p>
     </section>
     
 
@@ -52,10 +114,17 @@
         };
 
         // Interactive hotspots
+        const hotspotWidth = 100;
+        const hotspotHeight = 50;
+        const hotspotCount = 4;
+        const spacing = (canvas.width - hotspotCount * hotspotWidth) / (hotspotCount + 1);
+        const yPosition = canvas.height / 3 - hotspotHeight / 2;
+
         const hotspots = [
-            { x: 200, y: 200, width: 100, height: 50, label: "About Me" },
-            { x: 400, y: 300, width: 100, height: 50, label: "Projects" },
-            { x: 600, y: 400, width: 100, height: 50, label: "Contact" }
+            {x: spacing, y: yPosition, width: hotspotWidth, height: hotspotHeight, label: "About Me"},
+            {x: spacing * 2 + hotspotWidth, y: yPosition, width: hotspotWidth, height: hotspotHeight, label: "Projects"},
+            {x: spacing * 3 + hotspotWidth * 2, y: yPosition, width: hotspotWidth, height: hotspotHeight, label: "Certifications"},
+            {x: spacing * 4 + hotspotWidth * 3, y: yPosition, width: hotspotWidth, height: hotspotHeight, label: "Contact"}
         ];
 
         // Movement keys
@@ -86,38 +155,22 @@
                         // Hide all sections first
                         document.getElementById('about').classList.add('hidden-section');
                         document.getElementById('projects').classList.add('hidden-section');
+                        document.getElementById('certifications').classList.add('hidden-section');
                         document.getElementById('contact').classList.add('hidden-section');
                         // Show the selected section
                         if (hotspot.label === "About Me") {
                             document.getElementById('about').classList.remove('hidden-section');
                         } else if (hotspot.label === "Projects") {
                             document.getElementById('projects').classList.remove('hidden-section');
+                        } else if (hotspot.label === "Certifications") {
+                            document.getElementById('certifications').classList.remove('hidden-section');
                         } else if (hotspot.label === "Contact") {
                             document.getElementById('contact').classList.remove('hidden-section');
-                }
+                        }
                     }
                 });
             }
         });
-        // Event listener for mouse clicks
-        /*
-
-        canvas.addEventListener('click', (e) => {
-            const mouseX = e.clientX;
-            const mouseY = e.clientY;
-
-            hotspots.forEach(hotspot => {
-                if (
-                    mouseX > hotspot.x &&
-                    mouseX < hotspot.x + hotspot.width &&
-                    mouseY > hotspot.y &&
-                    mouseY < hotspot.y + hotspot.height
-                ) {
-                    alert(`You clicked on ${hotspot.label}`);
-                }
-            });
-        });
-        */
 
         // Update character position
         function update() {
